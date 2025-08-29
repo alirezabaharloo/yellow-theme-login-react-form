@@ -27,61 +27,66 @@ export default function LoginForm() {
     };
   }, []);
 
-  // Animation variants for new requirements
-  const spring = {
+
+  const shapeSpring = {
     type: "spring",
-    stiffness: 60,
-    damping: 14,
+    stiffness: 100,
+    damping: 12,
   };
-  // rightBottomTriangle delay
-  const baseDelay = 0.1;
-  const triangleDuration = 0.7; // estimate duration of triangle animation
-  const formStartDelay = baseDelay + triangleDuration; // e.g. 0.8
+
+  // Animation variants for new requirements
+  const formElementsSpring = {
+    type: "spring",
+    stiffness: 120,
+    damping: 12,
+  };
+
+  const formStartDelay = 0.5; // e.g. 0.8
   // Button: domino, top-left
   const buttonVariant = (delay) => ({
-    hidden: { opacity: 0, x: -30, y: -20 },
-    visible: { opacity: 1, x: 0, y: 0, transition: { ...spring, delay } },
+    hidden: { opacity: 0, x: -40, y: -30 },
+    visible: { opacity: 1, x: 0, y: 0, transition: { ...formElementsSpring, delay } },
   });
   // Text left
   const textLeftVariant = (delay) => ({
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
+    hidden: { opacity: 0, x: -30 },
+    visible: { opacity: 1, x: 0, transition: { ...formElementsSpring, delay } },
   });
   // Text right
   const textRightVariant = (delay) => ({
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
+    hidden: { opacity: 0, x: 30 },
+    visible: { opacity: 1, x: 0, transition: { ...formElementsSpring, delay } },
   });
   // Divider left line
   const dividerLeftVariant = (delay) => ({
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
+    hidden: { opacity: 0, x: -30 },
+    visible: { opacity: 1, x: 0, transition: { ...formElementsSpring, delay } },
   });
   // Divider right line
   const dividerRightVariant = (delay) => ({
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
+    hidden: { opacity: 0, x: 30 },
+    visible: { opacity: 1, x: 0, transition: { ...formElementsSpring, delay } },
   });
   // Divider 'or' text
   const dividerOrVariant = (delay) => ({
-    hidden: { opacity: 0, y: 20, scale: 0 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { ...spring, delay } },
+    hidden: { opacity: 0, y: 30, scale: 0 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { ...formElementsSpring, delay } },
   });
 
   // Animation delays (top to bottom, all start after triangle anim)
   const delays = {
     loginForm: formStartDelay + 0.0,
-    headerImg: formStartDelay + 0.1,
-    email: formStartDelay + 0.2,
-    password: formStartDelay + 0.3,
-    signIn: formStartDelay + 0.4,
-    registerNow: formStartDelay + 0.5,
-    registerBtn: formStartDelay + 0.5, // same as registerNow so they finish together
-    dividerLeft: formStartDelay + 0.6,
-    dividerOr: formStartDelay + 0.6,
-    dividerRight: formStartDelay + 0.6,
-    google: formStartDelay + 0.7,
-    facebook: formStartDelay + 0.8,
+    headerImg: formStartDelay + 0.0,
+    email: formStartDelay + 0.1,
+    password: formStartDelay + 0.2,
+    signIn: formStartDelay + 0.3,
+    registerNow: formStartDelay + 0.4,
+    registerBtn: formStartDelay + 0.4, // same as registerNow so they finish together
+    dividerLeft: formStartDelay + 0.5,
+    dividerOr: formStartDelay + 0.5,
+    dividerRight: formStartDelay + 0.5,
+    google: formStartDelay + 0.4,
+    facebook: formStartDelay + 0.5,
   };
 
   function handleSubmit(e) {
@@ -266,7 +271,7 @@ export default function LoginForm() {
               animate={{ opacity: 1, marginRight: '-2.875rem' }}
               whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
               whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
-              transition={{ ...spring, delay: 0.1 }}
+              transition={{ ...shapeSpring, delay: 0.1 }}
             />
           </div>
         </div>
@@ -279,7 +284,7 @@ export default function LoginForm() {
           animate={{ opacity: 1, top: '-3.3rem', right: '-2.6rem' }}
           whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
           whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
-          transition={{ ...spring, delay: 0.1 }}
+          transition={{ ...shapeSpring, delay: 0.1 }}
         />
         <motion.img
           src={leftTopTriangle}
@@ -289,7 +294,7 @@ export default function LoginForm() {
           animate={{ opacity: 1, top: '-7rem', left: '-7rem' }}
           whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
           whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
-          transition={{ ...spring, delay: 0.1 }}
+          transition={{ ...shapeSpring, delay: 0.1 }}
         />
         <motion.img
           src={rightBottomTriangle}
@@ -299,7 +304,7 @@ export default function LoginForm() {
           animate={{ opacity: 1, top: '27.25rem', right: '13rem' }}
           whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
           whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
-          transition={{ ...spring, delay: baseDelay }}
+          transition={{ ...shapeSpring, delay: 0.1 }}
         />
       </section>
     </div>
