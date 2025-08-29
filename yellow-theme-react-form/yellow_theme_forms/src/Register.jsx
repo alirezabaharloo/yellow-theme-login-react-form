@@ -261,11 +261,11 @@ export default function LoginForm() {
             <motion.img
               src="/human.png"
               alt="human"
-              className="mr-[-2.875rem] mt-0 pointer-events-auto "
+              className="mr-[-2.875rem] mt-0 pointer-events-auto"
               initial={{ opacity: 0, marginRight: '-18.875rem' }}
               animate={{ opacity: 1, marginRight: '-2.875rem' }}
-              whileTap={{ scale: 0.95 }}
-              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
+              whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
               transition={{ ...spring, delay: 0.1 }}
             />
           </div>
@@ -277,8 +277,8 @@ export default function LoginForm() {
           className="absolute pointer-events-auto"
           initial={{ opacity: 0, top: '-21.3rem', right: '-21.6rem' }}
           animate={{ opacity: 1, top: '-3.3rem', right: '-2.6rem' }}
-          whileTap={{ scale: 0.95 }}
-          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
+          whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
           transition={{ ...spring, delay: 0.1 }}
         />
         <motion.img
@@ -287,8 +287,8 @@ export default function LoginForm() {
           className="absolute pointer-events-auto"
           initial={{ opacity: 0, top: '-23rem', left: '-23rem' }}
           animate={{ opacity: 1, top: '-7rem', left: '-7rem' }}
-          whileTap={{ scale: 0.95 }}
-          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
+          whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
           transition={{ ...spring, delay: 0.1 }}
         />
         <motion.img
@@ -297,8 +297,8 @@ export default function LoginForm() {
           className="absolute z-[25] pointer-events-auto"
           initial={{ opacity: 0, top: '40.25rem', right: '13rem' }}
           animate={{ opacity: 1, top: '27.25rem', right: '13rem' }}
-          whileTap={{ scale: 0.95 }}
-          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
+          whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
           transition={{ ...spring, delay: baseDelay }}
         />
       </section>
