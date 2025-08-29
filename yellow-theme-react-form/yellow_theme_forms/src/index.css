@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-1: #FFD84A;
+  --color-primary-2: #FFF0B7;
+  --color-primary-3: #FFC900;
+  --color-secondary: #E7E7FF;
+  --color-secondary-hover: #abb8f5;
+  --color-gradient-1-from: #FFDE63;
+  --color-gradient-1-to: #FDC800;
+  --input-shadow: 2px 4px 0px rgba(0,0,0,0.5); /* 50% opacity for #fff shadow */
+}
