@@ -5,44 +5,84 @@ import leftTopTriangle from "../public/left_top_triangle.png";
 import headerTextElement from '../public/header_text_element.png'
 import Input from './Input';
 import { dummyUser } from './data';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, delay } from 'framer-motion';
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  // Remove formLoaded state
+  // const [formLoaded, setFormLoaded] = useState(false);
 
-  // Prevent scroll during initial animation
+  // Prevent scroll during initial animation (use a fixed timeout for scroll lock)
   useEffect(() => {
-    if (!imagesLoaded) {
-      document.body.style.overflow = 'hidden';
-    } else {
+    document.body.style.overflow = 'hidden';
+    const timeout = setTimeout(() => {
       document.body.style.overflow = 'auto';
-    }
+    }, 900); // match total delay of rightBottomTriangle + first form element
     return () => {
       document.body.style.overflow = 'auto';
+      clearTimeout(timeout);
     };
-  }, [imagesLoaded]);
+  }, []);
 
-  // Animation variants
+  // Animation variants for new requirements
   const spring = {
     type: "spring",
     stiffness: 60,
     damping: 14,
   };
+  // rightBottomTriangle delay
+  const baseDelay = 0.1;
+  const triangleDuration = 0.7; // estimate duration of triangle animation
+  const formStartDelay = baseDelay + triangleDuration; // e.g. 0.8
+  // Button: domino, top-left
+  const buttonVariant = (delay) => ({
+    hidden: { opacity: 0, x: -30, y: -20 },
+    visible: { opacity: 1, x: 0, y: 0, transition: { ...spring, delay } },
+  });
+  // Text left
+  const textLeftVariant = (delay) => ({
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
+  });
+  // Text right
+  const textRightVariant = (delay) => ({
+    hidden: { opacity: 0, x: 20 },
+    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
+  });
+  // Divider left line
+  const dividerLeftVariant = (delay) => ({
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
+  });
+  // Divider right line
+  const dividerRightVariant = (delay) => ({
+    hidden: { opacity: 0, x: 20 },
+    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
+  });
+  // Divider 'or' text
+  const dividerOrVariant = (delay) => ({
+    hidden: { opacity: 0, y: 20, scale: 0 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { ...spring, delay } },
+  });
 
-  // Zig-zag animation variants
-  const variantA = {
-    hidden: { opacity: 0, x: -40, y: -20 },
-    visible: { opacity: 1, x: 0, y: 0, transition: spring },
+  // Animation delays (top to bottom, all start after triangle anim)
+  const delays = {
+    loginForm: formStartDelay + 0.0,
+    headerImg: formStartDelay + 0.1,
+    email: formStartDelay + 0.2,
+    password: formStartDelay + 0.3,
+    signIn: formStartDelay + 0.4,
+    registerNow: formStartDelay + 0.5,
+    registerBtn: formStartDelay + 0.5, // same as registerNow so they finish together
+    dividerLeft: formStartDelay + 0.6,
+    dividerOr: formStartDelay + 0.6,
+    dividerRight: formStartDelay + 0.6,
+    google: formStartDelay + 0.7,
+    facebook: formStartDelay + 0.8,
   };
-  const variantB = {
-    hidden: { opacity: 0, x: 40, y: 20 },
-    visible: { opacity: 1, x: 0, y: 0, transition: spring },
-  };
-  // Remove stagger for simultaneous animation
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -81,34 +121,34 @@ export default function LoginForm() {
             {/* Header */}
             <motion.div
               className="relative"
-              initial="hidden"
-              animate={imagesLoaded ? "visible" : "hidden"}
             >
-              {/* 1. LOGIN FORM text (A) */}
+              {/* 1. LOGIN FORM text (no change) */}
               <motion.h1
                 className="text-[22px] font-bold w-fit mb-[35px] z-[20] pl-[6px] relative"
-                variants={variantA}
+                variants={textLeftVariant(delays.loginForm)}
+                initial="hidden"
+                animate="visible"
               >
                 LOGIN FORM
               </motion.h1>
-              {/* 2. headerTextElement image (B) */}
+              {/* 2. headerTextElement image (no change) */}
               <motion.img
                 src={headerTextElement}
                 alt=""
                 className="absolute top-[22px] w-[155px]"
-                variants={variantB}
+                variants={textRightVariant(delays.headerImg)}
+                initial="hidden"
+                animate="visible"
               />
             </motion.div>
 
             {/* Inputs and form content */}
             <motion.form
               onSubmit={handleSubmit}
-              initial="hidden"
-              animate={imagesLoaded ? "visible" : "hidden"}
             >
               <div className="flex flex-col gap-3">
-                {/* 3. Email or Phone input (A) */}
-                <motion.div variants={variantA}>
+                {/* 3. Email or Phone input (button style) */}
+                <motion.div variants={buttonVariant(delays.email)} initial="hidden" animate="visible">
                   <Input
                     type="text"
                     value={emailOrPhone}
@@ -116,8 +156,8 @@ export default function LoginForm() {
                     placeholder="Email or Phone"
                   />
                 </motion.div>
-                {/* 4. Password input (B) */}
-                <motion.div variants={variantB}>
+                {/* 4. Password input (button style) */}
+                <motion.div variants={buttonVariant(delays.password)} initial="hidden" animate="visible">
                   <Input
                     type="password"
                     value={password}
@@ -144,55 +184,58 @@ export default function LoginForm() {
                 </AnimatePresence>
               </div>
 
-              {/* 5. SIGN IN button (A) */}
+              {/* 5. SIGN IN button (button style) */}
               <motion.button
                 type="submit"
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.03 }}
-                variants={variantA}
+                variants={buttonVariant(delays.signIn)}
+                initial="hidden"
+                animate="visible"
                 className="w-[257px] h-[40px] text-[14px] font-bold text-black bg-gradient-to-r from-gradient-1-from to-gradient-1-to bg-[length:200%_200%] ease-in-out cursor-pointer shadow-[2px_4px_0px_rgba(0,0,0,0.25)] mt-[35px]  "
               >
                 SIGN IN
               </motion.button>
             </motion.form>
 
-            {/* 6. Register now text (B) */}
+            {/* 6. Register now text (split left/right) */}
             <motion.div
-              variants={variantB}
-              initial="hidden"
-              animate={imagesLoaded ? "visible" : "hidden"}
-              className="mt-4 text-center w-[257px]"
+              className="mt-4 text-center w-[257px] flex justify-center items-center gap-1"
             >
-              <span className="text-[14px] font-normal">you haven’t account? </span>
+              <motion.span className="text-[14px] font-normal" variants={textLeftVariant(delays.registerNow)} initial="hidden" animate="visible">
+                you haven’t account?
+              </motion.span>
               <motion.button
                 whileTap={{ scale: 0.92 }}
                 className="text-[15px] font-semibold cursor-pointer underline underline-offset-2 hover:text-gray-500 "
+                variants={textRightVariant(delays.registerBtn)}
+                initial="hidden"
+                animate="visible"
               >
                 register now
               </motion.button>
             </motion.div>
 
-            {/* 7. Divider with OR (A) */}
+            {/* 7. Divider with OR (lines 177–186) */}
             <motion.div
-              variants={variantA}
-              initial="hidden"
-              animate={imagesLoaded ? "visible" : "hidden"}
               className="w-[257px] flex items-center justify-center gap-1 mt-4"
             >
-              <div className="flex-1 h-[1.6px] bg-black rounded-full" />
-              <div className="text-[14px] relative top-[-2px]">or</div>
-              <div className="flex-1 h-[1.6px] bg-black rounded-full" />
+              <motion.div className="flex-1 h-[1.6px] bg-black rounded-full" variants={dividerLeftVariant(delays.dividerLeft)} initial="hidden" animate="visible" />
+              <motion.div className="text-[14px] relative top-[-2px]" variants={dividerOrVariant(delays.dividerOr)} initial="hidden" animate="visible">
+                or
+              </motion.div>
+              <motion.div className="flex-1 h-[1.6px] bg-black rounded-full" variants={dividerRightVariant(delays.dividerRight)} initial="hidden" animate="visible" />
             </motion.div>
 
-            {/* 8. Social login buttons (zig-zag: Google=B, Facebook=A) */}
+            {/* 8. Social login buttons (button style, domino) */}
             <div className="mt-5 flex flex-col gap-2.5 w-[257px]">
               <motion.button
                 type="button"
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}
-                variants={variantB}
+                variants={buttonVariant(delays.google)}
                 initial="hidden"
-                animate={imagesLoaded ? "visible" : "hidden"}
+                animate="visible"
                 className="w-full h-[40px] text-[16px] font-normal bg-secondary cursor-pointer shadow-[2px_4px_0px_rgba(0,0,0,0.25)] flex items-center gap-[8px] pl-[17.5%] hover:scale-[1.02]"
               >
                 <img src="/google_logo.png" alt="google" className="w-[21px] h-[21px] " />
@@ -202,9 +245,9 @@ export default function LoginForm() {
                 type="button"
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}
-                variants={variantA}
+                variants={buttonVariant(delays.facebook)}
                 initial="hidden"
-                animate={imagesLoaded ? "visible" : "hidden"}
+                animate="visible"
                 className="w-full h-[40px] text-[16px] font-normal bg-secondary cursor-pointer shadow-[2px_4px_0px_rgba(0,0,0,0.25)] flex items-center gap-[8px] pl-[17.5%] hover:scale-[1.02]"
               >
                 <img src="/facebook_logo.png" alt="facebook" className="w-[21px] h-[21px] " />
@@ -218,9 +261,11 @@ export default function LoginForm() {
             <motion.img
               src="/human.png"
               alt="human"
-              className="mr-[-2.875rem] mt-0"
+              className="mr-[-2.875rem] mt-0 pointer-events-auto "
               initial={{ opacity: 0, marginRight: '-18.875rem' }}
               animate={{ opacity: 1, marginRight: '-2.875rem' }}
+              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
               transition={{ ...spring, delay: 0.1 }}
             />
           </div>
@@ -229,7 +274,7 @@ export default function LoginForm() {
         <motion.img
           src={rightTopTriangle}
           alt="triangle"
-          className="absolute"
+          className="absolute pointer-events-auto"
           initial={{ opacity: 0, top: '-21.3rem', right: '-21.6rem' }}
           animate={{ opacity: 1, top: '-3.3rem', right: '-2.6rem' }}
           whileTap={{ scale: 0.95 }}
@@ -239,7 +284,7 @@ export default function LoginForm() {
         <motion.img
           src={leftTopTriangle}
           alt="triangle"
-          className="absolute"
+          className="absolute pointer-events-auto"
           initial={{ opacity: 0, top: '-23rem', left: '-23rem' }}
           animate={{ opacity: 1, top: '-7rem', left: '-7rem' }}
           whileTap={{ scale: 0.95 }}
@@ -249,12 +294,12 @@ export default function LoginForm() {
         <motion.img
           src={rightBottomTriangle}
           alt="triangle"
-          className="absolute z-[25]"
+          className="absolute z-[25] pointer-events-auto"
           initial={{ opacity: 0, top: '40.25rem', right: '13rem' }}
           animate={{ opacity: 1, top: '27.25rem', right: '13rem' }}
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.02 }}
-          transition={{ ...spring, delay: 0.1, onComplete: () => setImagesLoaded(true) }}
+          transition={{ ...spring, delay: baseDelay }}
         />
       </section>
     </div>
