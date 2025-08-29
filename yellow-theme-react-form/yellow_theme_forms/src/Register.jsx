@@ -28,62 +28,55 @@ export default function LoginForm() {
   }, []);
 
 
-  const shapeSpring = {
+  const spring = {
     type: "spring",
     stiffness: 100,
-    damping: 12,
-  };
-
-  // Animation variants for new requirements
-  const formElementsSpring = {
-    type: "spring",
-    stiffness: 120,
-    damping: 12,
+    damping: 18,
   };
 
   const formStartDelay = 0.5; // e.g. 0.8
   // Button: domino, top-left
   const buttonVariant = (delay) => ({
     hidden: { opacity: 0, x: -40, y: -30 },
-    visible: { opacity: 1, x: 0, y: 0, transition: { ...formElementsSpring, delay } },
+    visible: { opacity: 1, x: 0, y: 0, transition: { ...spring, delay } },
   });
   // Text left
   const textLeftVariant = (delay) => ({
     hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0, transition: { ...formElementsSpring, delay } },
+    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
   });
   // Text right
   const textRightVariant = (delay) => ({
     hidden: { opacity: 0, x: 30 },
-    visible: { opacity: 1, x: 0, transition: { ...formElementsSpring, delay } },
+    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
   });
   // Divider left line
   const dividerLeftVariant = (delay) => ({
     hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0, transition: { ...formElementsSpring, delay } },
+    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
   });
   // Divider right line
   const dividerRightVariant = (delay) => ({
     hidden: { opacity: 0, x: 30 },
-    visible: { opacity: 1, x: 0, transition: { ...formElementsSpring, delay } },
+    visible: { opacity: 1, x: 0, transition: { ...spring, delay } },
   });
   // Divider 'or' text
   const dividerOrVariant = (delay) => ({
     hidden: { opacity: 0, y: 30, scale: 0 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { ...formElementsSpring, delay } },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { ...spring, delay } },
   });
 
   // Animation delays (top to bottom, all start after triangle anim)
   const delays = {
     loginForm: formStartDelay + 0.0,
-    headerImg: formStartDelay + 0.0,
+    headerImg: formStartDelay + 0.7,
     email: formStartDelay + 0.1,
     password: formStartDelay + 0.2,
     signIn: formStartDelay + 0.3,
     registerNow: formStartDelay + 0.4,
     registerBtn: formStartDelay + 0.4, // same as registerNow so they finish together
     dividerLeft: formStartDelay + 0.5,
-    dividerOr: formStartDelay + 0.5,
+    dividerOr: formStartDelay + 0.45,
     dividerRight: formStartDelay + 0.5,
     google: formStartDelay + 0.4,
     facebook: formStartDelay + 0.5,
@@ -271,7 +264,7 @@ export default function LoginForm() {
               animate={{ opacity: 1, marginRight: '-2.875rem' }}
               whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
               whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
-              transition={{ ...shapeSpring, delay: 0.1 }}
+              transition={{ ...spring, delay: 0.1 }}
             />
           </div>
         </div>
@@ -284,7 +277,7 @@ export default function LoginForm() {
           animate={{ opacity: 1, top: '-3.3rem', right: '-2.6rem' }}
           whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
           whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
-          transition={{ ...shapeSpring, delay: 0.1 }}
+          transition={{ ...spring, delay: 0.1 }}
         />
         <motion.img
           src={leftTopTriangle}
@@ -294,7 +287,7 @@ export default function LoginForm() {
           animate={{ opacity: 1, top: '-7rem', left: '-7rem' }}
           whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
           whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
-          transition={{ ...shapeSpring, delay: 0.1 }}
+          transition={{ ...spring, delay: 0.1 }}
         />
         <motion.img
           src={rightBottomTriangle}
@@ -304,7 +297,7 @@ export default function LoginForm() {
           animate={{ opacity: 1, top: '27.25rem', right: '13rem' }}
           whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
           whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
-          transition={{ ...shapeSpring, delay: 0.1 }}
+          transition={{ ...spring, delay: 0.1 }}
         />
       </section>
     </div>
