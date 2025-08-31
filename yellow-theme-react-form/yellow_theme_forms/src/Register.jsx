@@ -6,14 +6,14 @@ import headerTextElement from '../public/header_text_element.png'
 import Input from './Input';
 import { dummyUser } from './data';
 import { motion, AnimatePresence, delay } from 'framer-motion';
+import { useBreakpoint } from "./useBreakPoint";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  // Remove formLoaded state
-  // const [formLoaded, setFormLoaded] = useState(false);
+  const breakPoint = useBreakpoint();
 
   // Prevent scroll during initial animation (use a fixed timeout for scroll lock)
   useEffect(() => {
@@ -102,6 +102,9 @@ export default function LoginForm() {
       }
     }, 30);
   }
+
+  console.log(breakPoint);
+  
 
   return (
     <div className="h-screen flex items-center justify-center bg-[#FFEDDA]">
@@ -272,7 +275,9 @@ export default function LoginForm() {
           alt="triangle"
           className="absolute pointer-events-auto"
           initial={{ opacity: 0, top: '-21.3rem', right: '-21.6rem' }}
-          animate={{ opacity: 1, top: '-3.3rem', right: '-2.6rem' }}
+          animate={{ opacity: 1, 
+            top: breakPoint != "desktop" ? '-5rem' : '-3.3rem',
+            right: breakPoint != "desktop" ? '-5.8rem' : '-2.6rem' }}
           whileTap={whileTap}
           whileHover={whileHover}
           transition={{ ...spring, delay: 0.1 }}
