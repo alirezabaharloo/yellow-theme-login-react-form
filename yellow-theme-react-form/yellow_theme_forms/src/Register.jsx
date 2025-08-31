@@ -69,7 +69,7 @@ export default function LoginForm() {
   // Animation delays (top to bottom, all start after triangle anim)
   const delays = {
     loginForm: formStartDelay + 0.0,
-    headerImg: formStartDelay + 0.7,
+    headerImg: formStartDelay + 0.5,
     email: formStartDelay + 0.1,
     password: formStartDelay + 0.2,
     signIn: formStartDelay + 0.3,
@@ -81,6 +81,9 @@ export default function LoginForm() {
     google: formStartDelay + 0.4,
     facebook: formStartDelay + 0.5,
   };
+
+  const whileTap = { scale: 0.95, transition: { duration: 0.15 } };
+  const whileHover = { scale: 1.02, transition: { duration: 0.18 } };
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -106,16 +109,11 @@ export default function LoginForm() {
       <section className="relative flex">
         {/* form */}
         <div
-          className="relative flex bg-no-repeat bg-contain z-20"
-          style={{
-            backgroundImage: "url('/form_wrapper.png')",
-            width: "855px",
-            height: "512px",
-            padding: "25px 45px",
-          }}
+          className="relative flex bg-no-repeat z-20 bg-[url('/form_wrapper.png')] bg-cover w-[855px] h-[512px] p-[25px_45px]
+            max-lg:bg-white max-lg:shadow-[4px_8px_13px_rgba(0,0,0,0.25)] max-lg:bg-none max-lg:w-[27.5rem]"
         >
           {/* Left side (Form) */}
-          <div className="flex-1">
+          <div className="flex-1 max-lg:flex max-lg:flex-col max-lg:items-center">
             {/* Header */}
             <motion.div
               className="relative"
@@ -185,8 +183,8 @@ export default function LoginForm() {
               {/* 5. SIGN IN button (button style) */}
               <motion.button
                 type="submit"
-                whileTap={{ scale: 0.95 }}
-                whileHover={{ scale: 1.03 }}
+                whileTap={whileTap}
+                whileHover={whileHover}
                 variants={buttonVariant(delays.signIn)}
                 initial="hidden"
                 animate="visible"
@@ -204,7 +202,7 @@ export default function LoginForm() {
                 you haven’t account?
               </motion.span>
               <motion.button
-                whileTap={{ scale: 0.92 }}
+                whileTap={whileTap}
                 className="text-[15px] font-semibold cursor-pointer underline underline-offset-2 hover:text-gray-500 "
                 variants={textRightVariant(delays.registerBtn)}
                 initial="hidden"
@@ -229,8 +227,8 @@ export default function LoginForm() {
             <div className="mt-5 flex flex-col gap-2.5 w-[257px]">
               <motion.button
                 type="button"
-                whileTap={{ scale: 0.95 }}
-                whileHover={{ scale: 1.02 }}
+                whileTap={whileTap}
+                whileHover={whileHover}
                 variants={buttonVariant(delays.google)}
                 initial="hidden"
                 animate="visible"
@@ -241,8 +239,8 @@ export default function LoginForm() {
               </motion.button>
               <motion.button
                 type="button"
-                whileTap={{ scale: 0.95 }}
-                whileHover={{ scale: 1.02 }}
+                whileTap={whileTap}
+                whileHover={whileHover}
                 variants={buttonVariant(delays.facebook)}
                 initial="hidden"
                 animate="visible"
@@ -255,15 +253,15 @@ export default function LoginForm() {
           </div>
 
           {/* Right side (Image / Illustration) */}
-          <div className="flex-1 flex items-center justify-center ">
+          <div className="flex-1 flex items-center justify-center max-lg:hidden">
             <motion.img
               src="/human.png"
               alt="human"
               className="mr-[-2.875rem] mt-0 pointer-events-auto"
               initial={{ opacity: 0, marginRight: '-18.875rem' }}
               animate={{ opacity: 1, marginRight: '-2.875rem' }}
-              whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
-              whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
+              whileTap={whileTap}
+              whileHover={whileHover}
               transition={{ ...spring, delay: 0.1 }}
             />
           </div>
@@ -275,8 +273,8 @@ export default function LoginForm() {
           className="absolute pointer-events-auto"
           initial={{ opacity: 0, top: '-21.3rem', right: '-21.6rem' }}
           animate={{ opacity: 1, top: '-3.3rem', right: '-2.6rem' }}
-          whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
-          whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
+          whileTap={whileTap}
+          whileHover={whileHover}
           transition={{ ...spring, delay: 0.1 }}
         />
         <motion.img
@@ -285,8 +283,8 @@ export default function LoginForm() {
           className="absolute pointer-events-auto"
           initial={{ opacity: 0, top: '-23rem', left: '-23rem' }}
           animate={{ opacity: 1, top: '-7rem', left: '-7rem' }}
-          whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
-          whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
+          whileTap={whileTap}
+          whileHover={whileHover}
           transition={{ ...spring, delay: 0.1 }}
         />
         <motion.img
@@ -295,8 +293,8 @@ export default function LoginForm() {
           className="absolute z-[25] pointer-events-auto"
           initial={{ opacity: 0, top: '40.25rem', right: '13rem' }}
           animate={{ opacity: 1, top: '27.25rem', right: '13rem' }}
-          whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
-          whileHover={{ scale: 1.02, transition: { duration: 0.18 } }}
+          whileTap={whileTap}
+          whileHover={whileHover}
           transition={{ ...spring, delay: 0.1 }}
         />
       </section>
