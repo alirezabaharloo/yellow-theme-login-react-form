@@ -3,12 +3,15 @@ import rightTopTriangle from "../public/right_top_triangle.png";
 import rightBottomTriangle from "../public/right_bottom_triangle.png";
 import leftTopTriangle from "../public/left_top_triangle.png";
 import headerTextElement from '../public/header_text_element.png'
+import headerTextElementTablet from '../public/header_text_element_tablet.png'
 import Input from './Input';
 import { dummyUser } from './data';
 import { motion, AnimatePresence, delay } from 'framer-motion';
 import { useBreakpoint } from "./useBreakPoint";
+import leftBottomTriangle from "../public/left_bottom_triangle.png";
 
-export default function LoginForm() {
+
+export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -18,13 +21,6 @@ export default function LoginForm() {
   // Prevent scroll during initial animation (use a fixed timeout for scroll lock)
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    const timeout = setTimeout(() => {
-      document.body.style.overflow = 'auto';
-    }, 900); // match total delay of rightBottomTriangle + first form element
-    return () => {
-      document.body.style.overflow = 'auto';
-      clearTimeout(timeout);
-    };
   }, []);
 
 
@@ -109,11 +105,11 @@ export default function LoginForm() {
   return (
     <div className="h-screen flex items-center justify-center bg-[#FFEDDA]">
       {/* Wrapper */}
-      <section className="relative flex">
+      <section className="relative flex h-[512px] w-[855px] max-lg:w-[27.5rem] max-ssm:w-[90%]  max-sm:w-[22.5rem] max-sm:top-[-2rem]">
         {/* form */}
         <div
-          className="relative flex bg-no-repeat z-20 bg-[url('/form_wrapper.png')] bg-cover w-[855px] h-[512px] p-[25px_45px]
-            max-lg:bg-white max-lg:shadow-[4px_8px_13px_rgba(0,0,0,0.25)] max-lg:bg-none max-lg:w-[27.5rem]"
+          className="relative flex bg-no-repeat z-20 bg-[url('/form_wrapper.png')] bg-cover p-[25px_45px]
+            max-lg:bg-white max-lg:shadow-[4px_8px_13px_rgba(0,0,0,0.25)] max-lg:bg-none w-full h-full max-ssm:pl-0 max-ssm:pr-0"
         >
           {/* Left side (Form) */}
           <div className="flex-1 max-lg:flex max-lg:flex-col max-lg:items-center">
@@ -123,7 +119,7 @@ export default function LoginForm() {
             >
               {/* 1. LOGIN FORM text (no change) */}
               <motion.h1
-                className="text-[22px] font-bold w-fit mb-[35px] z-[20] pl-[6px] relative"
+                className="text-[22px] font-bold w-fit mb-[35px] z-[20] pl-[6px] relative max-lg:right-[0.1rem]"
                 variants={textLeftVariant(delays.loginForm)}
                 initial="hidden"
                 animate="visible"
@@ -132,9 +128,9 @@ export default function LoginForm() {
               </motion.h1>
               {/* 2. headerTextElement image (no change) */}
               <motion.img
-                src={headerTextElement}
+                src={breakPoint !== "desktop" ? headerTextElementTablet : headerTextElement}
                 alt=""
-                className="absolute top-[22px] w-[155px]"
+                className="absolute top-[22px] w-[155px] max-lg:scale-[1.2]"
                 variants={textRightVariant(delays.headerImg)}
                 initial="hidden"
                 animate="visible"
@@ -266,14 +262,14 @@ export default function LoginForm() {
               whileTap={whileTap}
               whileHover={whileHover}
               transition={{ ...spring, delay: 0.1 }}
-            />
-          </div>
+              />
+            </div>
         </div>
         {/* Triangle under form */}
         <motion.img
           src={rightTopTriangle}
           alt="triangle"
-          className="absolute pointer-events-auto"
+          className="absolute pointer-events-auto max-sm:hidden"
           initial={{ opacity: 0, top: '-21.3rem', right: '-21.6rem' }}
           animate={{ opacity: 1, 
             top: breakPoint != "desktop" ? '-5rem' : '-3.3rem',
@@ -285,7 +281,7 @@ export default function LoginForm() {
         <motion.img
           src={leftTopTriangle}
           alt="triangle"
-          className="absolute pointer-events-auto"
+          className="absolute pointer-events-auto max-sm:hidden"
           initial={{ opacity: 0, top: '-23rem', left: '-23rem' }}
           animate={{ opacity: 1, top: '-7rem', left: '-7rem' }}
           whileTap={whileTap}
@@ -295,9 +291,31 @@ export default function LoginForm() {
         <motion.img
           src={rightBottomTriangle}
           alt="triangle"
-          className="absolute z-[25] pointer-events-auto"
-          initial={{ opacity: 0, top: '40.25rem', right: '13rem' }}
-          animate={{ opacity: 1, top: '27.25rem', right: '13rem' }}
+          className={`absolute pointer-events-auto max-lg:z-10 z-20 `}
+          initial={
+            breakPoint === "mobile" || breakPoint === "smallMobile"
+            ? { opacity: 0, top: '40.25rem', right: '20%' } :
+            breakPoint === "tablet" 
+              ? { opacity: 0, top: '40.25rem', right: '-21rem' } :
+              { opacity: 0, top: '40.25rem', right: '13rem' }
+          }
+          animate={
+            breakPoint === "mobile" || breakPoint === "smallMobile"
+            ? { opacity: 1, top: '27.25rem', right: '20%' } :
+            breakPoint === "tablet" 
+              ? { opacity: 1, top: '27.25rem', right: '-8rem', rotate: '-51deg' } :
+              { opacity: 1, top: '27.25rem', right: '13rem' }
+          }
+          whileTap={whileTap}
+          whileHover={whileHover}
+          transition={{ ...spring, delay: 0.1 }}
+        />
+        <motion.img
+          src={leftBottomTriangle}
+          alt="triangle"
+          className="absolute pointer-events-auto max-lg:sm:block hidden"
+          initial={{ opacity: 0, bottom: '-23rem', left: '-23rem' }}
+          animate={{ opacity: 1, bottom: '-3rem', left: '-3rem' }}
           whileTap={whileTap}
           whileHover={whileHover}
           transition={{ ...spring, delay: 0.1 }}

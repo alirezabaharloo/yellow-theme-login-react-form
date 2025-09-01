@@ -12,4 +12,12 @@
   --color-gradient-1-from: #FFDE63;
   --color-gradient-1-to: #FDC800;
   --input-shadow: 2px 4px 0px rgba(0,0,0,0.5); /* 50% opacity for #fff shadow */
+
+  /* Custom breakpoints matching useBreakPoint.jsx */
+  --breakpoint-ssm: 490px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
 }

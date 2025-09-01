@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const breakpoints = {
+  ssm: 490,
   sm : 640,
   md : 768,
   lg : 1024,
@@ -17,7 +18,8 @@ export function useBreakpoint() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (width < breakpoints.sm) return "mobile";
+  if (width < breakpoints.ssm) return "smallMobile";
+  else if (width < breakpoints.sm) return "mobile";
   else if (width < breakpoints.lg) return "tablet";
   else return "desktop"
 }
