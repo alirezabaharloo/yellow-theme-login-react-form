@@ -1,12 +1,12 @@
 
 import './index.css'
-import Login from './Login'
+import Form from './Form'
 
 
 function App() {
   return (
     <>
-      <Login />
+      <Form />
     </>
   )
 }
